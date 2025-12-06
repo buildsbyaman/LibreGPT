@@ -1,0 +1,276 @@
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  margin-left: 280px;
+  transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #212121;
+  color: #efeaea;
+  position: relative;
+}
+
+.chat-window.sidebar-closed {
+  margin-left: 0;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  min-height: 3.5rem;
+  flex-shrink: 0;
+  background-color: #212121;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header img {
+  cursor: pointer;
+  min-width: 25px;
+  min-height: 25px;
+}
+
+.user-img {
+  background-color: #0f4577;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.actual-chat {
+  flex: 1;
+  width: 70%;
+  max-width: 1200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  padding: 0 1rem;
+}
+
+.actual-chat::-webkit-scrollbar {
+  background-color: #212121;
+  width: 6px;
+}
+
+.actual-chat::-webkit-scrollbar-thumb {
+  background-color: #5f5d5d;
+  border-radius: 999px;
+}
+
+.actual-chat::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.chat-input {
+  min-height: 3.5rem;
+  max-height: 8rem;
+  width: 70%;
+  max-width: 1200px;
+  background-color: #303030;
+  border-radius: 50px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.chat-input input {
+  all: unset;
+  width: 100%;
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.chat-input input::placeholder {
+  color: #b0b0b0;
+}
+
+.chat-input button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.chat-input button img {
+  width: 20px;
+  height: 20px;
+}
+
+.chat-input button:hover {
+  background-color: #5f5d5d;
+}
+
+.chat-input button:active {
+  transform: scale(0.95);
+}
+
+.make-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Large tablets and small desktops */
+@media (max-width: 1280px) {
+  .actual-chat {
+    width: 75%;
+  }
+
+  .chat-input {
+    width: 75%;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .chat-window {
+    margin-left: 260px;
+  }
+
+  .actual-chat {
+    width: 80%;
+  }
+
+  .chat-input {
+    width: 80%;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .chat-window {
+    margin-left: 0;
+  }
+
+  .header {
+    padding: 0.75rem 1rem;
+    min-height: 3rem;
+  }
+
+  .header img {
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .actual-chat {
+    width: 90%;
+    padding: 0 0.75rem;
+  }
+
+  .chat-input {
+    width: 90%;
+    padding: 0.65rem 1rem;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .chat-input input {
+    font-size: 0.95rem;
+  }
+
+  .chat-input button {
+    min-width: 38px;
+    min-height: 38px;
+    padding: 0.4rem;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 640px) {
+  .header {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .actual-chat {
+    width: 95%;
+    padding: 0 0.5rem;
+  }
+
+  .chat-input {
+    width: 95%;
+    padding: 0.6rem 0.85rem;
+    gap: 0.5rem;
+    min-height: 3rem;
+    border-radius: 40px;
+  }
+
+  .chat-input input {
+    font-size: 0.9rem;
+  }
+
+  .chat-input button {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .chat-input button img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 400px) {
+  .header {
+    padding: 0.5rem;
+  }
+
+  .header img {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .actual-chat {
+    width: 98%;
+    padding: 0 0.25rem;
+  }
+
+  .chat-input {
+    width: 98%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    border-radius: 35px;
+  }
+
+  .chat-input input {
+    font-size: 0.85rem;
+  }
+
+  .chat-input button {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0.3rem;
+  }
+
+  .chat-input button img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (max-width: 900px) {
+  .header {
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .chat-input {
+    min-height: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
