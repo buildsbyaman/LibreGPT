@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Sidebar.css";
 import myContext from "../context";
 import { v4 as uuid } from "uuid";
@@ -16,6 +16,8 @@ const Sidebar = () => {
     setSidebarOpen,
   } = useContext(myContext);
 
+  const [isFetchChatsOk, setIsFetchChatsOk] = useState(true);
+
   const changeThread = async (threadId) => {
     try {
       setNewChat(false);
@@ -32,7 +34,6 @@ const Sidebar = () => {
       setPrevChats(messagesArray);
       setCurrThreadId(threadId);
     } catch (error) {
-      console.log("Error changing thread - ", error);
       setPrevChats([]);
     }
   };
@@ -58,7 +59,7 @@ const Sidebar = () => {
 
       newThreadInitialize();
     } catch (error) {
-      console.log("Error deleting thread - ", error);
+      console.log("Error deleting thread!⛔️");
     }
   };
 
@@ -83,13 +84,8 @@ const Sidebar = () => {
           console.log("Incompatible data format!⛔️");
         }
       } catch (error) {
-        console.log("Error in fetch all threads - ", error);
-        setAllThreads([
-          {
-            title: "Error fetching chats⛔️",
-            threadId: "0",
-          },
-        ]);
+        setIsFetchChatsOk(false);
+        console.log("Error in fetching previous chats!⛔️");
       }
     };
 
@@ -115,7 +111,8 @@ const Sidebar = () => {
         </button>
       </div>
       <div className="sidebar-chats-div">
-        {Array.isArray(allThreads) &&
+        {isFetchChatsOk ? (
+          Array.isArray(allThreads) &&
           allThreads.map((thread) => (
             <li
               key={thread.threadId}
@@ -135,7 +132,10 @@ const Sidebar = () => {
                 alt=""
               />
             </li>
-          ))}
+          ))
+        ) : (
+          <p>Error fetching chats from server!⛔️</p>
+        )}
       </div>
       <div className="sidebar-build-by-div">
         <p>

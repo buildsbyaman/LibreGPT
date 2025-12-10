@@ -47,35 +47,53 @@ router.post("/chat", async (req, res) => {
     }
     const threadExist = (await thread.findOne({ threadId })) ? true : false;
     let threadData;
+
     if (threadExist) {
       threadData = await thread.findOne({ threadId });
+
+      const messagesWithHistory = [
+        ...threadData.messages.map((msg) => ({
+          role: msg.role,
+          content: msg.content,
+        })),
+        { role: "user", content: message },
+      ];
+
+      const AIresponse = await AImodel(messagesWithHistory, req.body.model);
+
+      threadData.messages.push({ role: "user", content: message });
+      threadData.messages.push({
+        role: "assistant",
+        content: AIresponse,
+        timestamp: Date.now(),
+      });
+      await threadData.save();
+      res.json(AIresponse);
     } else {
-      const suitableTitle = await AImodel([
-        {
-          role: "user",
-          content: `strictly rephrase this "${message}" in 3 words and output only 3 words and nothing else.`,
-        },
+      const messagesWithHistory = [{ role: "user", content: message }];
+
+      const [suitableTitle, AIresponse] = await Promise.all([
+        AImodel([
+          {
+            role: "user",
+            content: `strictly rephrase this "${message}" in 3 words and output only 3 words and nothing else.`,
+          },
+        ]),
+        AImodel(messagesWithHistory, req.body.model),
       ]);
-      threadData = new thread({ threadId, title: suitableTitle });
+
+      threadData = new thread({
+        threadId,
+        title: suitableTitle,
+        messages: [
+          { role: "user", content: message },
+          { role: "assistant", content: AIresponse, timestamp: Date.now() },
+        ],
+      });
+
+      await threadData.save();
+      res.json(AIresponse);
     }
-
-    const messagesWithHistory = [
-      ...threadData.messages.map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      })),
-      { role: "user", content: message },
-    ];
-
-    const AIresponse = await AImodel(messagesWithHistory);
-    threadData.messages.push({ role: "user", content: message });
-    threadData.messages.push({
-      role: "assistant",
-      content: AIresponse,
-      timestamp: Date.now(),
-    });
-    await threadData.save();
-    res.json(AIresponse);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Some error occurred at server side!⛔️" });

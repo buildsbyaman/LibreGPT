@@ -176,8 +176,7 @@ img {
 /* Mobile landscape and below */
 @media (max-width: 768px) {
   .sidebar {
-    width: 75vw;
-    max-width: 300px;
+    width: 100%;
   }
 
   .close {
@@ -218,7 +217,7 @@ img {
 /* Mobile portrait */
 @media (max-width: 640px) {
   .sidebar {
-    width: 85vw;
+    width: 100%;
     max-width: none;
     padding: 12px;
   }

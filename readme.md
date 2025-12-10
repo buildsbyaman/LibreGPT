@@ -1,6 +1,6 @@
 # LibreGPT
 
-A modern full-stack AI chat app using React and Node.js that delivers a ChatGPT-style interface with threaded conversations, saved history, and real-time AI replies through OpenRouter. It’s free to use forever with no limits on conversation size.
+A modern full-stack AI chat app using React and Node.js that delivers a ChatGPT-style interface with threaded conversations, saved history, and real-time AI replies through OpenRouter. Switch between multiple AI models (ChatGPT, Gemini, DeepSeek, Nova 2 Lite) seamlessly in one conversation. It's free to use forever with no limits on conversation size.
 
 🔗 **[Live Demo](https://buildsbyaman-LibreGPT.vercel.app)**
 
@@ -10,7 +10,8 @@ A modern full-stack AI chat app using React and Node.js that delivers a ChatGPT-
 
 ## ✨ Features
 
-- **Real-time AI Chat** - Interactive conversations with AI using OpenRouter's DeepSeek model
+- **Multiple AI Models** - Switch between ChatGPT, Gemini, DeepSeek, and Nova 2 Lite in real-time
+- **Real-time AI Chat** - Interactive conversations with AI using OpenRouter
 - **Thread Management** - Organize conversations into separate threads with unique IDs
 - **Persistent Storage** - All chats stored in MongoDB with full history
 - **Modern UI** - Clean, responsive interface inspired by ChatGPT
@@ -96,7 +97,8 @@ LibreGPT/
 
 ### AI Integration
 
-- Uses OpenRouter's DeepSeek model for AI responses
+- Supports multiple AI models: ChatGPT, Gemini, DeepSeek, and Nova 2 Lite
+- Switch models on-the-fly without losing conversation context
 - Messages are sent with user context
 - Responses are streamed back to the frontend
 

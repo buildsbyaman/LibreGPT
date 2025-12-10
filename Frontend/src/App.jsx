@@ -6,18 +6,16 @@ import myContext from "./context.js";
 import { v4 as uuid } from "uuid";
 
 function App() {
-  const [reply, setReply] = useState(null);
   const [prompt, setPrompt] = useState("");
   const [currThreadId, setCurrThreadId] = useState(uuid());
   const [newChat, setNewChat] = useState(true);
   const [prevChats, setPrevChats] = useState([]);
   const [allThreads, setAllThreads] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth>900);
   const [isGettingReply, setisGettingReply] = useState(false);
+  const [currentModel, setCurrentModel] = useState("Deepseek");
 
   const providerValues = {
-    reply,
-    setReply,
     prompt,
     setPrompt,
     currThreadId,
@@ -32,6 +30,8 @@ function App() {
     setSidebarOpen,
     isGettingReply,
     setisGettingReply,
+    currentModel,
+    setCurrentModel,
   };
 
   return (

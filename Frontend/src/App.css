@@ -17,15 +17,14 @@ html {
 body {
   background-color: #181818;
   overflow-x: hidden;
-  min-height: 100vh;
-  width: 100%;
+  min-height: 100svh;
+  width: 100svw;
 }
 
 .flex {
   display: flex;
 }
 
-/* Responsive font sizing */
 @media (max-width: 768px) {
   html {
     font-size: 15px;
@@ -44,7 +43,6 @@ body {
   }
 }
 
-/* Utility classes for responsive behavior */
 .hide-mobile {
   @media (max-width: 768px) {
     display: none !important;
