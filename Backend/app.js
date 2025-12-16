@@ -37,26 +37,22 @@ const limiter = rateLimit({
   message: "Too many requests! Try again in 1 minute.",
 });
 
-const sessionOptions = {
-  secret:
-    process.env.SESSION_SECRET ||
-    "replace it with you own secret in env file if you are using it.",
+app.use(session({
+  name: "sid",
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URL,
+    ttl: 14 * 24 * 60 * 60
+  }),
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    collectionName: "sessions",
-    touchAfter: 24 * 3600,
-  }),
   cookie: {
     httpOnly: true,
     secure: true,
     sameSite: "none",
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  },
-};
-
-app.use(session(sessionOptions));
+    path: "/"
+  }
+}))
 
 app.use(passport.initialize());
 app.use(passport.session());
