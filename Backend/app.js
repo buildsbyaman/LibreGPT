@@ -42,7 +42,7 @@ const sessionOptions = {
     process.env.SESSION_SECRET ||
     "replace it with you own secret in env file if you are using it.",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI,
     collectionName: "sessions",
@@ -50,8 +50,8 @@ const sessionOptions = {
   }),
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
