@@ -40,7 +40,7 @@ const limiter = rateLimit({
 app.use(session({
   name: "sid",
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URL,
+    mongoUrl: process.env.MONGODB_URI,
     ttl: 14 * 24 * 60 * 60
   }),
   secret: process.env.SESSION_SECRET,
