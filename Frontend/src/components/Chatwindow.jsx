@@ -56,10 +56,7 @@ const Chatwindow = () => {
       credentials: "include",
     };
 
-    const apiResponse = await fetch(
-      `${import.meta.env.VITE_LINK}/api/user/logout`,
-      options
-    );
+    const apiResponse = await fetch(`/api/user/logout`, options);
 
     const response = await apiResponse.json();
     if (response.success || apiResponse.ok) {
@@ -98,10 +95,7 @@ const Chatwindow = () => {
         },
       ]);
 
-      const apiResponse = await fetch(
-        `${import.meta.env.VITE_LINK}/api/chat`,
-        options
-      );
+      const apiResponse = await fetch(`/api/chat`, options);
       const response = await apiResponse.json();
       setisGettingReply(false);
 

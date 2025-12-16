@@ -115,10 +115,7 @@ const Login = () => {
     };
 
     try {
-      const apiResponse = await fetch(
-        `${import.meta.env.VITE_LINK}/api/user/login`,
-        options
-      );
+      const apiResponse = await fetch(`/api/user/login`, options);
 
       const response = await apiResponse.json();
 

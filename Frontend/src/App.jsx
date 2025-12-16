@@ -30,10 +30,7 @@ function App() {
           credentials: "include",
         };
 
-        const apiResponse = await fetch(
-          `${import.meta.env.VITE_LINK}/api/user/status`,
-          options
-        );
+        const apiResponse = await fetch(`/api/user/status`, options);
 
         const response = await apiResponse.json();
         if (response.loginStatus === "true") {

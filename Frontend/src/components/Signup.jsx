@@ -120,10 +120,7 @@ const Signup = () => {
       }),
     };
 
-    const apiResponse = await fetch(
-      `${import.meta.env.VITE_LINK}/api/user/signup`,
-      options
-    );
+    const apiResponse = await fetch(`/api/user/signup`, options);
 
     const response = await apiResponse.json();
 

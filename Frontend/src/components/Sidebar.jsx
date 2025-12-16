@@ -22,13 +22,10 @@ const Sidebar = () => {
   const changeThread = async (threadId) => {
     try {
       setNewChat(false);
-      const APIcurrThreadData = await fetch(
-        `${import.meta.env.VITE_LINK}/api/thread/${threadId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const APIcurrThreadData = await fetch(`/api/thread/${threadId}`, {
+        method: "GET",
+        credentials: "include",
+      });
       const currThreadData = await APIcurrThreadData.json();
       const messagesArray = Array.isArray(currThreadData)
         ? currThreadData[0]?.messages || []
@@ -53,7 +50,7 @@ const Sidebar = () => {
 
   const deleteThread = async (threadId) => {
     try {
-      await fetch(`${import.meta.env.VITE_LINK}/api/thread/${threadId}`, {
+      await fetch(`/api/thread/${threadId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -78,13 +75,10 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchAllThreads = async () => {
       try {
-        const apiCallData = await fetch(
-          `${import.meta.env.VITE_LINK}/api/thread`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const apiCallData = await fetch(`/api/thread`, {
+          method: "GET",
+          credentials: "include",
+        });
         const jsonApiCallData = await apiCallData.json();
 
         if (Array.isArray(jsonApiCallData) && !jsonApiCallData.error) {
