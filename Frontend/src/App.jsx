@@ -1,7 +1,9 @@
-import { useState } from "react";
-import "./App.css";
-import Chatwindow from "./components/Chatwindow";
-import Sidebar from "./components/Sidebar";
+import Signup from "./components/Signup.jsx";
+import Login from "./components/Login.jsx";
+import Homepage from "./components/Homepage.jsx";
+import Flash from "./components/Flash.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 import myContext from "./context.js";
 import { v4 as uuid } from "uuid";
 
@@ -11,9 +13,40 @@ function App() {
   const [newChat, setNewChat] = useState(true);
   const [prevChats, setPrevChats] = useState([]);
   const [allThreads, setAllThreads] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth>900);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 900);
   const [isGettingReply, setisGettingReply] = useState(false);
   const [currentModel, setCurrentModel] = useState("Deepseek");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [flashMessage, setFlashMessage] = useState({ message: "", type: "" });
+
+  useEffect(() => {
+    const fetchLoginStatus = async () => {
+      try {
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        };
+
+        const apiResponse = await fetch(
+          `${import.meta.env.VITE_LINK}/api/user/status`,
+          options
+        );
+
+        const response = await apiResponse.json();
+        if (response.loginStatus === "true") {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        setIsLoggedIn(false);
+      }
+    };
+    fetchLoginStatus();
+  }, []);
 
   const providerValues = {
     prompt,
@@ -32,14 +65,22 @@ function App() {
     setisGettingReply,
     currentModel,
     setCurrentModel,
+    isLoggedIn,
+    setIsLoggedIn,
+    flashMessage,
+    setFlashMessage,
   };
 
   return (
     <myContext.Provider value={providerValues}>
-      <div className="flex">
-        <Sidebar />
-        <Chatwindow />
-      </div>
+      <Flash />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+        </Routes>
+      </BrowserRouter>
     </myContext.Provider>
   );
 }

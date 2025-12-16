@@ -1,14 +1,25 @@
 import express from "express";
 import thread from "../models/thread.js";
 import AImodel from "../utils/AImodel.js";
+import { threadSchema } from "../schema.js";
+
 const router = express.Router();
+
+const threadSchemaValidator = (req, res, next) => {
+  const { error } = threadSchema.validate(req.body);
+  if (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Please provide all details!" });
+  }
+  next();
+};
 
 router.get("/thread", async (req, res) => {
   try {
     const threadsData = await thread.find({}).sort({ updatedAt: -1 });
     res.json(threadsData);
   } catch (error) {
-    res.status(500).json({ error: "Error while fetching chats!⛔️" });
+    res.status(500).json({ error: "Error while fetching chats!" });
   }
 });
 
@@ -18,7 +29,7 @@ router.get("/thread/:threadId", async (req, res) => {
     const threadData = await thread.find({ threadId });
     res.json(threadData);
   } catch (error) {
-    res.status(500).json({ error: "No such chat exists!⛔️" });
+    res.status(500).json({ error: "No such chat exists!" });
   }
 });
 
@@ -33,18 +44,13 @@ router.delete("/thread/:threadId", async (req, res) => {
       res.status(400).json("No such chat exists!");
     }
   } catch (error) {
-    res.status(500).json("Unable to delete the chat!⛔️");
+    res.status(500).json("Unable to delete the chat!");
   }
 });
 
-router.post("/chat", async (req, res) => {
+router.post("/chat", threadSchemaValidator, async (req, res) => {
   try {
     const { threadId, message } = req.body;
-    if (!threadId || !message) {
-      return res
-        .status(400)
-        .json({ error: "Please provide the required parameters!⛔️" });
-    }
     const threadExist = (await thread.findOne({ threadId })) ? true : false;
     let threadData;
 
@@ -96,7 +102,7 @@ router.post("/chat", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Some error occurred at server side!⛔️" });
+    res.status(500).json({ error: "Some error occurred at server side!" });
   }
 });
 

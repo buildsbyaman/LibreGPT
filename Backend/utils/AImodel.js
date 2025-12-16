@@ -31,9 +31,9 @@ const AImodel = async (messages, model) => {
   } catch (error) {
     console.log(error);
     if (error.code === 429) {
-      return "Rate Limit reached! Please try again in a few moments OR use another model.⛔️";
+      return "Rate Limit reached! Please try again in a few moments OR use another model.";
     } else {
-      return "Error occurred while getting response from AI model!⛔️";
+      return "Error occurred while getting response from AI model!";
     }
   }
 };

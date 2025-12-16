@@ -1,11 +1,15 @@
 .sidebar {
-  background-color: #181818;
-  color: #efeaea;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 29, 41, 0.98) 0%,
+    rgba(37, 40, 51, 0.95) 100%
+  );
+  color: var(--text-white);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 14px;
+  padding: 1rem;
   position: fixed;
   top: 0;
   transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -13,6 +17,8 @@
   width: 280px;
   z-index: 1000;
   overflow-y: auto;
+  border-right: 1px solid var(--border);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar-build-by-div a {
@@ -72,7 +78,7 @@ img {
 }
 
 .sidebar-chats-div::-webkit-scrollbar-thumb {
-  background-color: #5f5d5d;
+  background-color: rgba(99, 102, 241, 0.4);
   border-radius: 999px;
 }
 
@@ -82,13 +88,30 @@ img {
 
 .sidebar-chats-div li {
   cursor: pointer;
-  border-radius: 7px;
-  padding: 0.55rem;
+  border-radius: 10px;
+  padding: 0.7rem 0.875rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.sidebar-chats-div li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 70%;
+  background: linear-gradient(90deg, var(--primary), transparent);
+  border-radius: 0 4px 4px 0;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-chats-div li p {
@@ -96,38 +119,123 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   line-height: 1.4;
+  color: var(--text-gray);
+  transition: color 0.25s ease;
 }
 
 .sidebar-chats-div li:hover {
-  background-color: #282828;
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.12),
+    rgba(139, 92, 246, 0.06)
+  );
+  border-color: rgba(99, 102, 241, 0.25);
+  transform: translateX(3px);
+}
+
+.sidebar-chats-div li:hover::before {
+  width: 3px;
+}
+
+.sidebar-chats-div li:hover p {
+  color: var(--text-white);
 }
 
 .new-chat {
   all: unset;
   cursor: pointer;
-  border-radius: 7px;
-  padding: 0 0.55rem;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
   margin: 1rem 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1) 0%,
+    rgba(139, 92, 246, 0.08) 100%
+  );
+  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.new-chat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.new-chat:hover::before {
+  transform: translateX(100%);
 }
 
 .new-chat span {
   font-size: 0.95rem;
+  color: var(--text-white);
 }
 
 .new-chat:hover {
-  background-color: #282828;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(139, 92, 246, 0.12) 100%
+  );
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.new-chat:active {
+  transform: translateY(0);
+}
+
+.new-chat.selected-thread {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--purple) 100%
+  ) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(0) !important;
+}
+
+.new-chat.selected-thread span {
+  font-weight: 600;
+}
+
+.new-chat.selected-thread:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--purple) 100%
+  ) !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px) !important;
 }
 
 #trash-icon {
   border-radius: 50%;
-  background-color: #181818;
-  transition: background-color 0.2s;
+  background-color: rgba(95, 112, 182, 0.8);
+  transition: all 0.2s ease-in-out;
   flex-shrink: 0;
   padding: 2px;
   min-width: 25px;
@@ -135,19 +243,52 @@ img {
 }
 
 #trash-icon:hover {
-  background-color: red;
+  background: linear-gradient(
+    135deg,
+    var(--error) 0%,
+    rgba(220, 38, 38, 0.9) 100%
+  );
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .sidebar-build-by-div {
   width: 100%;
   padding: 0.5rem 0.2rem;
-  border-top: solid 1px #353535;
+  border-top: solid 1px rgba(99, 102, 241, 0.2);
   flex-shrink: 0;
   font-size: 0.85rem;
 }
 
 .selected-thread {
-  background-color: #282828;
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.2) 0%,
+    rgba(139, 92, 246, 0.15) 100%
+  ) !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateX(0) !important;
+}
+
+.selected-thread::before {
+  width: 3px !important;
+  background: linear-gradient(180deg, var(--primary), var(--purple)) !important;
+}
+
+.selected-thread p {
+  color: var(--text-white) !important;
+  font-weight: 500;
+}
+
+.selected-thread:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.25) 0%,
+    rgba(139, 92, 246, 0.18) 100%
+  ) !important;
+  transform: translateX(0) !important;
 }
 
 /* Tablet and below */

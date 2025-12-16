@@ -24,14 +24,40 @@
 
 .user-message {
   max-width: 85%;
-  padding: 0.65rem 1.25rem;
-  background-color: #323232;
-  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+  border-radius: 20px 20px 4px 20px;
   width: fit-content;
   word-wrap: break-word;
   overflow-wrap: break-word;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.user-message::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .gpt-chat-div {
@@ -45,11 +71,16 @@
   width: 95%;
   max-width: 100%;
   list-style-position: inside;
-  padding-left: 0;
+  padding: 1rem 1.5rem;
   overflow-wrap: break-word;
   word-break: break-word;
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .gpt-message h1,

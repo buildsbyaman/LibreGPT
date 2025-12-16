@@ -14,6 +14,7 @@ const Sidebar = () => {
     setNewChat,
     sidebarOpen,
     setSidebarOpen,
+    setFlashMessage,
   } = useContext(myContext);
 
   const [isFetchChatsOk, setIsFetchChatsOk] = useState(true);
@@ -25,6 +26,7 @@ const Sidebar = () => {
         `${import.meta.env.VITE_LINK}/api/thread/${threadId}`,
         {
           method: "GET",
+          credentials: "include",
         }
       );
       const currThreadData = await APIcurrThreadData.json();
@@ -35,6 +37,10 @@ const Sidebar = () => {
       setCurrThreadId(threadId);
     } catch (error) {
       setPrevChats([]);
+      setFlashMessage({
+        message: "Failed to load chat thread!",
+        type: "error",
+      });
     }
   };
 
@@ -49,6 +55,7 @@ const Sidebar = () => {
     try {
       await fetch(`${import.meta.env.VITE_LINK}/api/thread/${threadId}`, {
         method: "DELETE",
+        credentials: "include",
       });
 
       setAllThreads((prevThreads) =>
@@ -57,9 +64,14 @@ const Sidebar = () => {
           : []
       );
 
+      setFlashMessage({
+        message: "Chat deleted successfully!",
+        type: "success",
+      });
       newThreadInitialize();
     } catch (error) {
-      console.log("Error deleting thread!⛔️");
+      console.log("Error deleting thread!");
+      setFlashMessage({ message: "Failed to delete chat!", type: "error" });
     }
   };
 
@@ -70,6 +82,7 @@ const Sidebar = () => {
           `${import.meta.env.VITE_LINK}/api/thread`,
           {
             method: "GET",
+            credentials: "include",
           }
         );
         const jsonApiCallData = await apiCallData.json();
@@ -81,11 +94,19 @@ const Sidebar = () => {
           }));
           setAllThreads(filteredThreadsData);
         } else {
-          console.log("Incompatible data format!⛔️");
+          console.log("Incompatible data format!");
+          setFlashMessage({
+            message: "Failed to load chat history!",
+            type: "warning",
+          });
         }
       } catch (error) {
         setIsFetchChatsOk(false);
-        console.log("Error in fetching previous chats!⛔️");
+        console.log("Error in fetching previous chats!");
+        setFlashMessage({
+          message: "Could not connect to server!",
+          type: "error",
+        });
       }
     };
 
@@ -134,7 +155,7 @@ const Sidebar = () => {
             </li>
           ))
         ) : (
-          <p>Error fetching chats from server!⛔️</p>
+          <p>Error fetching chats from server!</p>
         )}
       </div>
       <div className="sidebar-build-by-div">

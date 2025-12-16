@@ -1,11 +1,15 @@
 import { useContext, useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Chatwindow.css";
 import Chat from "./Chat.jsx";
 import myContext from "../context.js";
 
 const Chatwindow = () => {
   const [selectModelOpen, setSelectModelOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const modelDropdownRef = useRef(null);
+  const userMenuRef = useRef(null);
+  const navigate = useNavigate();
 
   const {
     prompt,
@@ -18,8 +22,12 @@ const Chatwindow = () => {
     setisGettingReply,
     currentModel,
     setCurrentModel,
+    isLoggedIn,
+    setIsLoggedIn,
+    setFlashMessage,
   } = useContext(myContext);
 
+  useEffect(() => {}, [isLoggedIn]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -28,6 +36,9 @@ const Chatwindow = () => {
       ) {
         setSelectModelOpen(false);
       }
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -35,6 +46,28 @@ const Chatwindow = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleLogout = async () => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    };
+
+    const apiResponse = await fetch(
+      `${import.meta.env.VITE_LINK}/api/user/logout`,
+      options
+    );
+
+    const response = await apiResponse.json();
+    if (response.success || apiResponse.ok) {
+      setIsLoggedIn(false);
+      setFlashMessage({ message: "Successfully logged out!", type: "info" });
+      navigate("/login");
+    }
+  };
 
   const handleAiSearch = async () => {
     if (!prompt.trim()) return;
@@ -45,6 +78,7 @@ const Chatwindow = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         message: prompt,
         threadId: currThreadId,
@@ -83,10 +117,11 @@ const Chatwindow = () => {
         ...prevChats,
         {
           role: "assistant",
-          content: "Unable to connect to model online!⛔️",
+          content: "Unable to connect to model online!",
         },
       ]);
-      console.log("Some error occurred while fetching the data! ⛔️");
+      console.log("Some error occurred while fetching the data! ");
+      setFlashMessage({ message: "Failed to get AI response!", type: "error" });
       setisGettingReply(false);
     }
   };
@@ -124,6 +159,10 @@ const Chatwindow = () => {
               <li
                 onClick={() => {
                   setCurrentModel("ChatGPT");
+                  setFlashMessage({
+                    message: "Switched to ChatGPT",
+                    type: "info",
+                  });
                 }}
               >
                 ChatGPT
@@ -131,6 +170,10 @@ const Chatwindow = () => {
               <li
                 onClick={() => {
                   setCurrentModel("Gemini");
+                  setFlashMessage({
+                    message: "Switched to Gemini",
+                    type: "info",
+                  });
                 }}
               >
                 Gemini
@@ -138,6 +181,10 @@ const Chatwindow = () => {
               <li
                 onClick={() => {
                   setCurrentModel("Deepseek");
+                  setFlashMessage({
+                    message: "Switched to Deepseek",
+                    type: "info",
+                  });
                 }}
               >
                 Deepseek
@@ -145,6 +192,10 @@ const Chatwindow = () => {
               <li
                 onClick={() => {
                   setCurrentModel("Nova2");
+                  setFlashMessage({
+                    message: "Switched to Nova 2 Lite",
+                    type: "info",
+                  });
                 }}
               >
                 Nova 2 Lite
@@ -153,7 +204,30 @@ const Chatwindow = () => {
           </div>
         </div>
 
-        <img className="user-img" src="/user.png" alt="" />
+        <div
+          ref={userMenuRef}
+          className="user-menu"
+          onClick={() => setUserMenuOpen(!userMenuOpen)}
+        >
+          <img className="user-img" src="/user.png" alt="" />
+
+          <div
+            className={`user-dropdown ${
+              userMenuOpen ? "position-absolute" : "display-none"
+            }`}
+          >
+            <ul>
+              {isLoggedIn ? (
+                <li onClick={handleLogout}>Logout</li>
+              ) : (
+                <>
+                  <li onClick={() => navigate("/login")}>Login</li>
+                  <li onClick={() => navigate("/signup")}>Sign Up</li>
+                </>
+              )}
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div className="actual-chat">

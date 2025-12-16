@@ -9,13 +9,9 @@
 
 html {
   font-size: 16px;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: #181818;
   overflow-x: hidden;
   min-height: 100svh;
   width: 100svw;
@@ -55,7 +51,6 @@ body {
   }
 }
 
-/* Ensure touch targets are at least 44x44px on mobile */
 @media (max-width: 768px) {
   button,
   a,
