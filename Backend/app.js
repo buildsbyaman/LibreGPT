@@ -10,6 +10,11 @@ import { Strategy as LocalStrategy } from "passport-local";
 import User from "./models/user.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -72,7 +77,7 @@ app.use((req, res, next) => {
 app.use(limiter);
 
 app.get("/", (req, res) => {
-  res.sendFile("views/index.html", { root: "." });
+  res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
 app.get("/api/status", async (req, res) => {
