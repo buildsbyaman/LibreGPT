@@ -22,10 +22,13 @@ const Sidebar = () => {
   const changeThread = async (threadId) => {
     try {
       setNewChat(false);
-      const APIcurrThreadData = await fetch(`/api/thread/${threadId}`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const APIcurrThreadData = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/thread/${threadId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       const currThreadData = await APIcurrThreadData.json();
       const messagesArray = Array.isArray(currThreadData)
         ? currThreadData[0]?.messages || []
@@ -50,7 +53,7 @@ const Sidebar = () => {
 
   const deleteThread = async (threadId) => {
     try {
-      await fetch(`/api/thread/${threadId}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/thread/${threadId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -67,7 +70,6 @@ const Sidebar = () => {
       });
       newThreadInitialize();
     } catch (error) {
-      console.log("Error deleting thread!");
       setFlashMessage({ message: "Failed to delete chat!", type: "error" });
     }
   };
@@ -75,28 +77,36 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchAllThreads = async () => {
       try {
-        const apiCallData = await fetch(`/api/thread`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const apiCallData = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/thread`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         const jsonApiCallData = await apiCallData.json();
 
-        if (Array.isArray(jsonApiCallData) && !jsonApiCallData.error) {
+        if (!jsonApiCallData.error && !jsonApiCallData.warning) {
           const filteredThreadsData = jsonApiCallData.map((thread) => ({
             threadId: thread.threadId,
             title: thread.title,
           }));
           setAllThreads(filteredThreadsData);
         } else {
-          console.log("Incompatible data format!");
-          setFlashMessage({
-            message: "Failed to load chat history!",
-            type: "warning",
-          });
+          if (jsonApiCallData.warning) {
+            setFlashMessage({
+              message: "Please login to retrieve chats!",
+              type: "info",
+            });
+          } else {
+            setFlashMessage({
+              message: "Failed to load chat history!",
+              type: "warning",
+            });
+          }
         }
       } catch (error) {
         setIsFetchChatsOk(false);
-        console.log("Error in fetching previous chats!");
         setFlashMessage({
           message: "Could not connect to server!",
           type: "error",

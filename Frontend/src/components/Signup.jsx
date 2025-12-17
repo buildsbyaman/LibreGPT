@@ -92,7 +92,6 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate all fields
     const usernameError = validateUsername(username);
     const passwordError = validatePassword(password);
 
@@ -120,7 +119,10 @@ const Signup = () => {
       }),
     };
 
-    const apiResponse = await fetch(`/api/user/signup`, options);
+    const apiResponse = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/user/signup`,
+      options
+    );
 
     const response = await apiResponse.json();
 

@@ -10,6 +10,8 @@ A modern full-stack AI chat app using React and Node.js that delivers a ChatGPT-
 
 ## ✨ Features
 
+- **User Authentication** - Secure signup/login with Passport.js and session management
+- **Authorization** - Thread ownership verification ensures users only access their own chats
 - **Multiple AI Models** - Switch between ChatGPT, Gemini, DeepSeek, and Nova 2 Lite in real-time
 - **Real-time AI Chat** - Interactive conversations with AI using OpenRouter
 - **Thread Management** - Organize conversations into separate threads with unique IDs
@@ -39,10 +41,13 @@ A modern full-stack AI chat app using React and Node.js that delivers a ChatGPT-
 
 - **Node.js** with **Express 5.1.0** - Server framework
 - **MongoDB** with **Mongoose 9.0.0** - Database and ODM
+- **Passport.js** - Authentication middleware with local strategy
+- **Express Session** - Session management with MongoDB store
 - **OpenAI SDK** - Integration with OpenRouter API
 - **Express Rate Limit** - API rate limiting
 - **CORS** - Cross-origin resource sharing
 - **dotenv** - Environment variable management
+- **Joi** - Input validation and sanitization
 
 ## 📋 Prerequisites
 
@@ -115,18 +120,10 @@ LibreGPT/
 
 ## 🔧 Configuration
 
-| Variable             | Description               | Required           |
-| -------------------- | ------------------------- | ------------------ |
-| `PORT`               | Backend server port       | No (default: 8080) |
-| `MONGODB_URI`        | MongoDB connection string | Yes                |
-| `OPENROUTER_API_KEY` | OpenRouter API key        | Yes                |
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+| Variable             | Description                   | Required           |
+| -------------------- | ----------------------------- | ------------------ |
+| `SESSION_SECRET`     | Secret key for sessions       | Yes                |
+| `PORT`               | Backend server port           | No (default: 8080) |
+| `MONGODB_URI`        | MongoDB connection string     | Yes                |
+| `OPENROUTER_API_KEY` | OpenRouter API key            | Yes                |
+| `VITE_API_URL`       | Backend API URL (in frontend) | Yes                |

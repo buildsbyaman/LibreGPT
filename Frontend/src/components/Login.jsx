@@ -85,7 +85,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate all fields
     const usernameError = validateUsername(username);
     const passwordError = validatePassword(password);
 
@@ -115,7 +114,10 @@ const Login = () => {
     };
 
     try {
-      const apiResponse = await fetch(`/api/user/login`, options);
+      const apiResponse = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/user/login`,
+        options
+      );
 
       const response = await apiResponse.json();
 

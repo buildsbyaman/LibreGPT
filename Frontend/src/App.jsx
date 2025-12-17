@@ -17,6 +17,7 @@ function App() {
   const [isGettingReply, setisGettingReply] = useState(false);
   const [currentModel, setCurrentModel] = useState("Deepseek");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
   const [flashMessage, setFlashMessage] = useState({ message: "", type: "" });
 
   useEffect(() => {
@@ -30,13 +31,18 @@ function App() {
           credentials: "include",
         };
 
-        const apiResponse = await fetch(`/api/user/status`, options);
+        const apiResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/user/status`,
+          options
+        );
 
         const response = await apiResponse.json();
-        if (response.loginStatus === "true") {
+        if (response.loginStatus === "true" && response.user) {
           setIsLoggedIn(true);
+          setUsername(response.user.username || "");
         } else {
           setIsLoggedIn(false);
+          setUsername("");
         }
       } catch (error) {
         setIsLoggedIn(false);
@@ -64,6 +70,8 @@ function App() {
     setCurrentModel,
     isLoggedIn,
     setIsLoggedIn,
+    username,
+    setUsername,
     flashMessage,
     setFlashMessage,
   };

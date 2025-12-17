@@ -24,10 +24,11 @@ const Chatwindow = () => {
     setCurrentModel,
     isLoggedIn,
     setIsLoggedIn,
+    username,
+    setUsername,
     setFlashMessage,
   } = useContext(myContext);
 
-  useEffect(() => {}, [isLoggedIn]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -56,11 +57,15 @@ const Chatwindow = () => {
       credentials: "include",
     };
 
-    const apiResponse = await fetch(`/api/user/logout`, options);
+    const apiResponse = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/user/logout`,
+      options
+    );
 
     const response = await apiResponse.json();
     if (response.success || apiResponse.ok) {
       setIsLoggedIn(false);
+      setUsername("");
       setFlashMessage({ message: "Successfully logged out!", type: "info" });
       navigate("/login");
     }
@@ -95,7 +100,10 @@ const Chatwindow = () => {
         },
       ]);
 
-      const apiResponse = await fetch(`/api/chat`, options);
+      const apiResponse = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/chat`,
+        options
+      );
       const response = await apiResponse.json();
       setisGettingReply(false);
 
@@ -114,7 +122,6 @@ const Chatwindow = () => {
           content: "Unable to connect to model online!",
         },
       ]);
-      console.log("Some error occurred while fetching the data! ");
       setFlashMessage({ message: "Failed to get AI response!", type: "error" });
       setisGettingReply(false);
     }
@@ -140,7 +147,7 @@ const Chatwindow = () => {
           }}
         >
           <button className={`select-model-button`}>
-            <p>{currentModel == "Nova2" ? "Nova 2 Lite" : currentModel}</p>
+            <p>{currentModel === "Nova2" ? "Nova 2 Lite" : currentModel}</p>
             <img src="/dropdown.png" alt="" />
           </button>
 
@@ -203,6 +210,9 @@ const Chatwindow = () => {
           className="user-menu"
           onClick={() => setUserMenuOpen(!userMenuOpen)}
         >
+          {isLoggedIn && username && (
+            <span className="username">{username}</span>
+          )}
           <img className="user-img" src="/user.png" alt="" />
 
           <div
