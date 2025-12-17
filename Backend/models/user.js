@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 
 const userSchema = new mongoose.Schema({
-  allThreads: [
+  threads: [
     {
-      type: String,
-      default: "",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "thread",
     },
   ],
 });

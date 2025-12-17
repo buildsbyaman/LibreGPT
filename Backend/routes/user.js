@@ -14,11 +14,16 @@ const userSchemaValidator = (req, res, next) => {
 };
 
 router.post("/status", (req, res) => {
-  if (res.locals.currUser) {
-    res.status(200).json({ loginStatus: true });
-  } else {
-    res.status(200).json({ loginStatus: false });
+  if (req.isAuthenticated()) {
+    return res.status(200).json({
+      loginStatus: "true",
+      user: {
+        username: req.user.username,
+        _id: req.user._id,
+      },
+    });
   }
+  return res.status(200).json({ loginStatus: "false" });
 });
 
 router.post("/login", (req, res, next) => {
@@ -53,33 +58,32 @@ router.post("/login", (req, res, next) => {
 router.post("/signup", userSchemaValidator, async (req, res) => {
   try {
     const { username, password } = req.body;
-    const isUsernameTaken = (await User.findOne({ username })) ? true : false;
+    const isUsernameTaken = await User.findOne({ username });
     if (isUsernameTaken) {
-      res.status(500).json({
+      return res.status(409).json({
         message: "Username already taken! Please try a new one.",
-        success: "false",
-        usernameTaken: "true",
-      });
-    } else {
-      const newUser = await User.register(new User({ username }), password);
-      req.login(newUser, (error) => {
-        if (error) {
-          res.status(400).json({
-            message:
-              "Account created successfully but unable to login you automatically! Please login manually.",
-            success: "false",
-          });
-        }
-      });
-      res.status(200).json({
-        message: "Successfully created a new account!✅",
-        success: "true",
+        success: false,
+        usernameTaken: true,
       });
     }
+    const newUser = await User.register(new User({ username }), password);
+    req.login(newUser, (error) => {
+      if (error) {
+        return res.status(400).json({
+          message:
+            "Account created successfully but unable to login you automatically! Please login manually.",
+          success: false,
+        });
+      }
+      return res.status(200).json({
+        message: "Successfully created a new account!✅",
+        success: true,
+      });
+    });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Unable to create a new account!",
-      success: "false",
+      success: false,
     });
   }
 });
@@ -89,13 +93,12 @@ router.post("/logout", (req, res) => {
     if (err) {
       return res
         .status(500)
-        .json({ message: "Unable to logout.", success: "false" });
-    } else {
-      res.clearCookie("connect.sid");
-      res
-        .status(200)
-        .json({ message: "Successfully logged out.", success: "true" });
+        .json({ message: "Unable to logout.", success: false });
     }
+    res.clearCookie("connect.sid", { path: "/" });
+    return res
+      .status(200)
+      .json({ message: "Successfully logged out.", success: true });
   });
 });
 

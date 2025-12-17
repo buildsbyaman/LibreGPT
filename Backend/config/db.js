@@ -15,3 +15,10 @@ export const connectDB = async () => {
     console.log("Error while connecting to DB!", error.message);
   }
 };
+
+export const getDBStatus = () => {
+  return {
+    connected: isConnected && mongoose.connection.readyState === 1,
+    state: mongoose.connection.readyState,
+  };
+};

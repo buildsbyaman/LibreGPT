@@ -18,8 +18,9 @@ await connectDB();
 
 app.set("trust proxy", 1);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.static("public"));
 
 app.use(
   cors({
@@ -37,22 +38,24 @@ const limiter = rateLimit({
   message: "Too many requests! Try again in 1 minute.",
 });
 
-app.use(session({
-  name: "sid",
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    ttl: 14 * 24 * 60 * 60
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/"
-  }
-}))
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      ttl: 14 * 24 * 60 * 60,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      path: "/",
+    },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,11 +65,25 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-  res.locals.user = req.user || null;
+  res.locals.currUser = req.user || null;
   next();
 });
 
 app.use(limiter);
+
+app.get("/", (req, res) => {
+  res.sendFile("views/index.html", { root: "." });
+});
+
+app.get("/api/status", async (req, res) => {
+  const { getDBStatus } = await import("./config/db.js");
+  const dbStatus = getDBStatus();
+  res.json({
+    server: "running",
+    database: dbStatus.connected ? "connected" : "disconnected",
+    uptime: process.uptime(),
+  });
+});
 
 app.use("/api", threadRouter);
 app.use("/api/user", userRouter);
