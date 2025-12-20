@@ -84,9 +84,6 @@ router.delete("/thread/:threadId", async (req, res) => {
 
 router.post("/chat", threadSchemaValidator, async (req, res) => {
   try {
-    if (!req.isAuthenticated()) {
-      return res.status(401).json({ error: "Please login to use chat!" });
-    }
     const { threadId, message } = req.body;
     const threadExist = (await thread.findOne({ threadId })) ? true : false;
     let threadData;
