@@ -93,10 +93,17 @@ const Sidebar = () => {
           }));
           setAllThreads(filteredThreadsData);
         } else {
-          setFlashMessage({
-            message: "Failed to load chat history!",
-            type: "warning",
-          });
+          if (jsonApiCallData.warning) {
+            setFlashMessage({
+              message: "Please login to get a better experience!",
+              type: "info",
+            });
+          } else {
+            setFlashMessage({
+              message: "Failed to load chat history!",
+              type: "warning",
+            });
+          }
         }
       } catch (error) {
         setIsFetchChatsOk(false);

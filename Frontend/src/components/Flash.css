@@ -1,6 +1,6 @@
 .flash-message {
   position: fixed;
-  top: 2rem;
+  top: 1.3rem;
   right: 2rem;
   z-index: 9999;
   min-width: 320px;
