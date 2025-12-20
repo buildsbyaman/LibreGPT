@@ -94,10 +94,7 @@ const Sidebar = () => {
           setAllThreads(filteredThreadsData);
         } else {
           if (jsonApiCallData.warning) {
-            setFlashMessage({
-              message: "Please login to get a better experience!",
-              type: "info",
-            });
+            return;
           } else {
             setFlashMessage({
               message: "Failed to load chat history!",
