@@ -13,7 +13,7 @@ function App() {
   const [newChat, setNewChat] = useState(true);
   const [prevChats, setPrevChats] = useState([]);
   const [allThreads, setAllThreads] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 900);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isGettingReply, setisGettingReply] = useState(false);
   const [currentModel, setCurrentModel] = useState("Deepseek");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,7 +33,7 @@ function App() {
 
         const apiResponse = await fetch(
           `${import.meta.env.VITE_API_URL}/api/user/status`,
-          options
+          options,
         );
 
         const response = await apiResponse.json();

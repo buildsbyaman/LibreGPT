@@ -159,15 +159,6 @@ const Sidebar = () => {
           <p>Error fetching chats from server!</p>
         )}
       </div>
-      <div className="sidebar-build-by-div">
-        <p>
-          Build by{" "}
-          <a href="https://buildsbyaman.vercel.app" target="_blank">
-            Aman
-          </a>
-          ❤️
-        </p>
-      </div>
     </div>
   );
 };

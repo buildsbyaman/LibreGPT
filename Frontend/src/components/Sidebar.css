@@ -21,10 +21,6 @@
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.sidebar-build-by-div a {
-  color: #efeaea;
-}
-
 .open {
   left: 0;
 }
@@ -212,7 +208,8 @@ img {
     var(--purple) 100%
   ) !important;
   border-color: var(--primary) !important;
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4),
+  box-shadow:
+    0 4px 16px rgba(99, 102, 241, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   transform: translateY(0) !important;
 }
@@ -227,7 +224,8 @@ img {
     var(--primary) 0%,
     var(--purple) 100%
   ) !important;
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.5),
+  box-shadow:
+    0 4px 16px rgba(99, 102, 241, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
   transform: translateY(-1px) !important;
 }
@@ -252,14 +250,6 @@ img {
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.sidebar-build-by-div {
-  width: 100%;
-  padding: 0.5rem 0.2rem;
-  border-top: solid 1px rgba(99, 102, 241, 0.2);
-  flex-shrink: 0;
-  font-size: 0.85rem;
-}
-
 .selected-thread {
   background: linear-gradient(
     90deg,
@@ -267,7 +257,8 @@ img {
     rgba(139, 92, 246, 0.15) 100%
   ) !important;
   border-color: rgba(99, 102, 241, 0.4) !important;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2),
+  box-shadow:
+    0 2px 8px rgba(99, 102, 241, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transform: translateX(0) !important;
 }
@@ -374,11 +365,6 @@ img {
   .new-chat {
     padding: 0.75rem 0.5rem;
   }
-
-  .sidebar-build-by-div {
-    font-size: 0.8rem;
-    padding: 0.6rem 0.2rem;
-  }
 }
 
 /* Small mobile devices */
@@ -404,9 +390,5 @@ img {
 
   .new-chat span {
     font-size: 0.85rem;
-  }
-
-  .sidebar-build-by-div {
-    font-size: 0.75rem;
   }
 }
