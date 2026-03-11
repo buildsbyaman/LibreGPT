@@ -1,9 +1,5 @@
 .sidebar {
-  background: linear-gradient(
-    135deg,
-    rgba(26, 29, 41, 0.98) 0%,
-    rgba(37, 40, 51, 0.95) 100%
-  );
+  background: var(--bg-dark);
   color: var(--text-white);
   display: flex;
   flex-direction: column;
@@ -18,7 +14,7 @@
   z-index: 1000;
   overflow-y: auto;
   border-right: 1px solid var(--border);
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 0 20px var(--black-30);
 }
 
 .open {
@@ -74,12 +70,74 @@ img {
 }
 
 .sidebar-chats-div::-webkit-scrollbar-thumb {
-  background-color: rgba(99, 102, 241, 0.4);
+  background-color: var(--primary-20);
   border-radius: 999px;
 }
 
 .sidebar-chats-div::-webkit-scrollbar-track {
   background-color: transparent;
+}
+
+.sidebar-auth-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  flex: 1;
+}
+
+.auth-prompt-icon {
+  width: 40px !important;
+  height: 40px !important;
+  opacity: 0.4;
+}
+
+.auth-prompt-text {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  line-height: 1.5;
+  max-width: 200px;
+}
+
+.auth-prompt-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.auth-prompt-btn {
+  text-decoration: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-btn {
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: 0 2px 10px var(--primary-20);
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--primary-20);
+}
+
+.signup-btn {
+  background: var(--primary-08);
+  color: var(--text-white);
+  border: 1px solid var(--primary-20);
+}
+
+.signup-btn:hover {
+  background: var(--primary-15);
+  border-color: var(--border);
+  transform: translateY(-2px);
 }
 
 .sidebar-chats-div li {
@@ -94,7 +152,7 @@ img {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--white-02);
 }
 
 .sidebar-chats-div li::before {
@@ -122,12 +180,8 @@ img {
 }
 
 .sidebar-chats-div li:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(99, 102, 241, 0.12),
-    rgba(139, 92, 246, 0.06)
-  );
-  border-color: rgba(99, 102, 241, 0.25);
+  background: var(--primary-08);
+  border-color: var(--primary-20);
   transform: translateX(3px);
 }
 
@@ -150,15 +204,11 @@ img {
   justify-content: center;
   min-height: 44px;
   gap: 0.75rem;
-  background: linear-gradient(
-    135deg,
-    rgba(99, 102, 241, 0.1) 0%,
-    rgba(139, 92, 246, 0.08) 100%
-  );
-  border: 1.5px solid rgba(99, 102, 241, 0.3);
+  background: var(--primary-08);
+  border: 1.5px solid var(--primary-20);
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px var(--black-30);
   position: relative;
   overflow: hidden;
 }
@@ -170,7 +220,7 @@ img {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.1),
+    var(--white-10),
     transparent
   );
   transform: translateX(-100%);
@@ -187,14 +237,10 @@ img {
 }
 
 .new-chat:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(99, 102, 241, 0.15) 0%,
-    rgba(139, 92, 246, 0.12) 100%
-  );
-  border-color: rgba(99, 102, 241, 0.4);
+  background: var(--primary-15);
+  border-color: var(--border);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 4px 12px var(--primary-20);
 }
 
 .new-chat:active {
@@ -202,15 +248,11 @@ img {
 }
 
 .new-chat.selected-thread {
-  background: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--purple) 100%
-  ) !important;
+  background: var(--primary) !important;
   border-color: var(--primary) !important;
   box-shadow:
-    0 4px 16px rgba(99, 102, 241, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    0 4px 16px var(--primary-20),
+    inset 0 1px 0 var(--white-20) !important;
   transform: translateY(0) !important;
 }
 
@@ -219,20 +261,16 @@ img {
 }
 
 .new-chat.selected-thread:hover {
-  background: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--purple) 100%
-  ) !important;
+  background: var(--primary) !important;
   box-shadow:
-    0 4px 16px rgba(99, 102, 241, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    0 4px 16px var(--primary-20),
+    inset 0 1px 0 var(--white-20) !important;
   transform: translateY(-1px) !important;
 }
 
 #trash-icon {
   border-radius: 50%;
-  background-color: rgba(95, 112, 182, 0.8);
+  background-color: var(--white-08);
   transition: all 0.2s ease-in-out;
   flex-shrink: 0;
   padding: 2px;
@@ -251,21 +289,17 @@ img {
 }
 
 .selected-thread {
-  background: linear-gradient(
-    90deg,
-    rgba(99, 102, 241, 0.2) 0%,
-    rgba(139, 92, 246, 0.15) 100%
-  ) !important;
-  border-color: rgba(99, 102, 241, 0.4) !important;
+  background: var(--primary-15) !important;
+  border-color: var(--primary-20) !important;
   box-shadow:
-    0 2px 8px rgba(99, 102, 241, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 2px 8px var(--primary-08),
+    inset 0 1px 0 var(--white-10);
   transform: translateX(0) !important;
 }
 
 .selected-thread::before {
   width: 3px !important;
-  background: linear-gradient(180deg, var(--primary), var(--purple)) !important;
+  background: linear-gradient(180deg, var(--primary), var(--primary-20)) !important;
 }
 
 .selected-thread p {
@@ -274,15 +308,10 @@ img {
 }
 
 .selected-thread:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(99, 102, 241, 0.25) 0%,
-    rgba(139, 92, 246, 0.18) 100%
-  ) !important;
+  background: var(--primary-20) !important;
   transform: translateX(0) !important;
 }
 
-/* Tablet and below */
 @media (max-width: 1024px) {
   .sidebar {
     width: 260px;
@@ -305,7 +334,6 @@ img {
   }
 }
 
-/* Mobile landscape and below */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -346,7 +374,6 @@ img {
   }
 }
 
-/* Mobile portrait */
 @media (max-width: 640px) {
   .sidebar {
     width: 100%;
@@ -367,7 +394,6 @@ img {
   }
 }
 
-/* Small mobile devices */
 @media (max-width: 400px) {
   .sidebar {
     width: 100vw;

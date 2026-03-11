@@ -15,7 +15,7 @@ function App() {
   const [allThreads, setAllThreads] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isGettingReply, setisGettingReply] = useState(false);
-  const [currentModel, setCurrentModel] = useState("Deepseek");
+  const [currentModel, setCurrentModel] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [flashMessage, setFlashMessage] = useState({ message: "", type: "" });

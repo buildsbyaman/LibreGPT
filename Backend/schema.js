@@ -10,9 +10,7 @@ const userSchema = Joi.object({
 const threadSchema = Joi.object({
   threadId: Joi.string().uuid().required(),
   message: Joi.string().min(1).max(10000).trim().required(),
-  model: Joi.string()
-    .valid("ChatGPT", "Gemini", "Nova2", "Deepseek")
-    .required(),
+  model: Joi.string().min(1).max(200).required(),
 })
   .required()
   .unknown(false);

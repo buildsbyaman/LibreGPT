@@ -4,12 +4,7 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(
-    135deg,
-    var(--bg-dark) 0%,
-    var(--bg-light) 50%,
-    var(--bg-dark) 100%
-  );
+  background: var(--bg-dark);
   padding: 1rem;
   position: relative;
   overflow: hidden;
@@ -20,11 +15,7 @@
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(
-    circle,
-    rgba(99, 102, 241, 0.12) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, var(--primary-15) 0%, transparent 70%);
   top: -250px;
   right: -200px;
   border-radius: 50%;
@@ -38,11 +29,7 @@
   position: absolute;
   width: 500px;
   height: 500px;
-  background: radial-gradient(
-    circle,
-    rgba(139, 92, 246, 0.1) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, var(--primary-08) 0%, transparent 70%);
   bottom: -200px;
   left: -150px;
   border-radius: 50%;
@@ -52,8 +39,7 @@
 }
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translate(0, 0) scale(1);
   }
   33% {
@@ -135,8 +121,7 @@
 }
 
 @keyframes pulse {
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
     opacity: 0.5;
   }
@@ -147,16 +132,12 @@
 }
 
 .login-box {
-  background: linear-gradient(
-    135deg,
-    rgba(26, 29, 41, 0.9) 0%,
-    rgba(37, 40, 51, 0.85) 100%
-  );
+  background: var(--bg-surface);
   border-radius: 24px;
   padding: 3rem 2.5rem;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border);
+  box-shadow: 0 20px 60px var(--black-50), 0 0 0 1px var(--border);
   position: relative;
   z-index: 1;
   border: 1px solid var(--border);
@@ -180,13 +161,12 @@
   height: 64px;
   object-fit: contain;
   animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 8px 24px rgba(99, 102, 241, 0.4));
+  filter: drop-shadow(0 8px 24px var(--primary-20));
   will-change: transform;
 }
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px);
   }
   50% {
@@ -200,6 +180,7 @@
   font-weight: 700;
   margin: 0 0 0.5rem 0;
   letter-spacing: -0.5px;
+  font-family: var(--font-heading);
 }
 
 .login-header p {
@@ -231,7 +212,7 @@
 }
 
 .input-wrapper input {
-  background: rgba(26, 29, 41, 0.6);
+  background: var(--bg-dark);
   border: 2px solid var(--border);
   border-radius: var(--radius);
   padding: 0.9rem 1rem;
@@ -244,16 +225,17 @@
   outline: none;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-sans);
 }
 
 .input-wrapper input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-  background: rgba(26, 29, 41, 0.8);
+  box-shadow: 0 0 0 4px var(--primary-08);
+  background: var(--bg-surface);
 }
 
 .input-wrapper input::placeholder {
-  color: rgba(176, 176, 176, 0.6);
+  color: var(--text-gray);
 }
 
 .input-icon {
@@ -263,7 +245,8 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  color: rgba(139, 92, 246, 0.85);
+  color: var(--primary);
+  opacity: 0.7;
   transition: var(--transition);
   pointer-events: none;
 }
@@ -271,11 +254,13 @@
 .input-wrapper input:focus ~ .input-icon,
 .input-wrapper input:focus + .input-icon {
   color: var(--primary);
+  opacity: 1;
   transform: translateY(-50%) scale(1.05);
 }
 
 .input-wrapper:focus-within .input-icon {
   color: var(--primary);
+  opacity: 1;
   transform: translateY(-50%) scale(1.05);
 }
 
@@ -287,7 +272,8 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  color: rgba(139, 92, 246, 0.85);
+  color: var(--primary);
+  opacity: 0.7;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
@@ -297,7 +283,7 @@
 }
 
 .password-toggle:hover {
-  color: var(--primary);
+  opacity: 1;
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -316,7 +302,7 @@
 .strength-bar {
   flex: 1;
   height: 4px;
-  background-color: rgba(176, 176, 176, 0.2);
+  background-color: var(--text-gray-20);
   border-radius: 999px;
   overflow: hidden;
   position: relative;
@@ -363,7 +349,7 @@
 }
 
 .login-button {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+  background: var(--primary);
   color: var(--white);
   border: none;
   border-radius: 14px;
@@ -373,9 +359,10 @@
   cursor: pointer;
   margin-top: 0.5rem;
   transition: var(--transition);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 16px var(--primary-20);
   position: relative;
   overflow: hidden;
+  font-family: var(--font-sans);
 }
 
 .login-button::before {
@@ -385,19 +372,15 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--white-20), transparent);
   transition: left 0.5s;
 }
 
 .login-button:hover {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+  background: var(--primary);
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 6px 24px var(--primary-20);
+  filter: brightness(1.15);
 }
 
 .login-button:hover::before {
@@ -428,12 +411,8 @@
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .spinner-circle {
@@ -443,15 +422,9 @@
 }
 
 @keyframes dash {
-  0% {
-    stroke-dashoffset: 50;
-  }
-  50% {
-    stroke-dashoffset: 12.5;
-  }
-  100% {
-    stroke-dashoffset: 50;
-  }
+  0% { stroke-dashoffset: 50; }
+  50% { stroke-dashoffset: 12.5; }
+  100% { stroke-dashoffset: 50; }
 }
 
 .login-footer {
@@ -475,11 +448,10 @@
 }
 
 .login-footer a:hover {
-  color: var(--primary);
+  filter: brightness(1.2);
   text-decoration: underline;
 }
 
-/* Tablets */
 @media (max-width: 768px) {
   .login-box {
     padding: 2.5rem 2rem;
@@ -496,7 +468,6 @@
   }
 }
 
-/* Mobile devices */
 @media (max-width: 640px) {
   .login-container {
     padding: 0.5rem;
@@ -542,7 +513,6 @@
   }
 }
 
-/* Small mobile devices */
 @media (max-width: 400px) {
   .login-box {
     padding: 1.75rem 1.25rem;

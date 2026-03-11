@@ -27,7 +27,9 @@ const Chat = () => {
           ) : (
             <div className="gpt-message">
               <Markdown rehypePlugins={[rehypeHighlight]}>
-                {chat.content}
+                {typeof chat.content === "string"
+                  ? chat.content
+                  : JSON.stringify(chat.content)}
               </Markdown>
             </div>
           )}

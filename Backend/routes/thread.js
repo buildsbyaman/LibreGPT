@@ -1,10 +1,20 @@
 import express from "express";
 import thread from "../models/thread.js";
-import AImodel from "../utils/AImodel.js";
+import AImodel, { fetchFreeModels } from "../utils/AImodel.js";
 import { threadSchema } from "../schema.js";
 import User from "../models/user.js";
 
 const router = express.Router();
+
+router.get("/models", async (req, res) => {
+  try {
+    const freeModels = await fetchFreeModels();
+    res.json({ success: true, models: freeModels });
+  } catch (error) {
+    console.error("Error fetching models:", error);
+    res.status(500).json({ success: false, error: "Failed to fetch models" });
+  }
+});
 
 const threadSchemaValidator = (req, res, next) => {
   const { error } = threadSchema.validate(req.body);

@@ -15,6 +15,7 @@ const Sidebar = () => {
     sidebarOpen,
     setSidebarOpen,
     setFlashMessage,
+    isLoggedIn,
   } = useContext(myContext);
 
   const [isFetchChatsOk, setIsFetchChatsOk] = useState(true);
@@ -133,7 +134,16 @@ const Sidebar = () => {
         </button>
       </div>
       <div className="sidebar-chats-div">
-        {isFetchChatsOk ? (
+        {!isLoggedIn ? (
+          <div className="sidebar-auth-prompt">
+            <img src="/user.png" alt="" className="auth-prompt-icon" />
+            <p className="auth-prompt-text">Login or Signup first to save and view your chats</p>
+            <div className="auth-prompt-buttons">
+              <a href="/login" className="auth-prompt-btn login-btn">Login</a>
+              <a href="/signup" className="auth-prompt-btn signup-btn">Sign Up</a>
+            </div>
+          </div>
+        ) : isFetchChatsOk ? (
           Array.isArray(allThreads) &&
           allThreads.map((thread) => (
             <li

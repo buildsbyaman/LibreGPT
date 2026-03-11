@@ -7,6 +7,8 @@ import myContext from "../context.js";
 const Chatwindow = () => {
   const [selectModelOpen, setSelectModelOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [availableModels, setAvailableModels] = useState([]);
+  const [modelsLoading, setModelsLoading] = useState(true);
   const modelDropdownRef = useRef(null);
   const userMenuRef = useRef(null);
   const navigate = useNavigate();
@@ -28,6 +30,44 @@ const Chatwindow = () => {
     setUsername,
     setFlashMessage,
   } = useContext(myContext);
+
+  useEffect(() => {
+    const fetchModels = async () => {
+      try {
+        setModelsLoading(true);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/models`
+        );
+        const data = await response.json();
+
+        if (data.success && data.models.length > 0) {
+          const topModels = data.models.slice(0, 5);
+          setAvailableModels(topModels);
+
+          if (!currentModel || currentModel === "Deepseek") {
+            setCurrentModel(topModels[0].id);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch models:", error);
+
+        setAvailableModels([
+          { id: "openai/gpt-oss-120b:free", name: "ChatGPT" },
+          { id: "google/gemini-2.0-flash-exp:free", name: "Gemini" },
+          { id: "deepseek/deepseek-chat-v3-0324:free", name: "Deepseek" },
+          { id: "amazon/nova-2-lite-v1:free", name: "Nova 2 Lite" },
+          {
+            id: "meta-llama/llama-3.3-70b-instruct:free",
+            name: "Llama 3.3 70B",
+          },
+        ]);
+      } finally {
+        setModelsLoading(false);
+      }
+    };
+
+    fetchModels();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -71,6 +111,20 @@ const Chatwindow = () => {
     }
   };
 
+  const getCurrentModelName = () => {
+    const model = availableModels.find((m) => m.id === currentModel);
+    if (model) return model.name;
+    if (currentModel && currentModel.includes("/")) {
+      return currentModel
+        .split("/")
+        .pop()
+        .replace(":free", "")
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+    return currentModel || "Select Model";
+  };
+
   const handleAiSearch = async () => {
     if (!prompt.trim()) return;
     setisGettingReply(true);
@@ -107,11 +161,16 @@ const Chatwindow = () => {
       const response = await apiResponse.json();
       setisGettingReply(false);
 
+      const content =
+        typeof response === "string"
+          ? response
+          : response.error || response.message || "Something went wrong!";
+
       setPrevChats((prevChats) => [
         ...prevChats,
         {
           role: "assistant",
-          content: response,
+          content: content,
         },
       ]);
     } catch (error) {
@@ -147,7 +206,13 @@ const Chatwindow = () => {
           }}
         >
           <button className={`select-model-button`}>
-            <p>{currentModel === "Nova2" ? "Nova 2 Lite" : currentModel}</p>
+            <p>
+              {modelsLoading ? (
+                <span className="models-loading-text">Loading…</span>
+              ) : (
+                getCurrentModelName()
+              )}
+            </p>
             <img src="/dropdown.png" alt="" />
           </button>
 
@@ -156,52 +221,34 @@ const Chatwindow = () => {
               selectModelOpen ? "position-absolute" : "display-none"
             }`}
           >
-            <ul>
-              <li
-                onClick={() => {
-                  setCurrentModel("ChatGPT");
-                  setFlashMessage({
-                    message: "Switched to ChatGPT",
-                    type: "info",
-                  });
-                }}
-              >
-                ChatGPT
-              </li>
-              <li
-                onClick={() => {
-                  setCurrentModel("Gemini");
-                  setFlashMessage({
-                    message: "Switched to Gemini",
-                    type: "info",
-                  });
-                }}
-              >
-                Gemini
-              </li>
-              <li
-                onClick={() => {
-                  setCurrentModel("Deepseek");
-                  setFlashMessage({
-                    message: "Switched to Deepseek",
-                    type: "info",
-                  });
-                }}
-              >
-                Deepseek
-              </li>
-              <li
-                onClick={() => {
-                  setCurrentModel("Nova2");
-                  setFlashMessage({
-                    message: "Switched to Nova 2 Lite",
-                    type: "info",
-                  });
-                }}
-              >
-                Nova 2 Lite
-              </li>
-            </ul>
+            {modelsLoading ? (
+              <div className="models-loading">
+                <div className="model-skeleton"></div>
+                <div className="model-skeleton"></div>
+                <div className="model-skeleton"></div>
+              </div>
+            ) : (
+              <ul>
+                {availableModels.map((model) => (
+                  <li
+                    key={model.id}
+                    className={currentModel === model.id ? "model-active" : ""}
+                    onClick={() => {
+                      setCurrentModel(model.id);
+                      setFlashMessage({
+                        message: `Switched to ${model.name}`,
+                        type: "info",
+                      });
+                    }}
+                  >
+                    <span className="model-name">{model.name}</span>
+                    {currentModel === model.id && (
+                      <span className="model-check">✓</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 

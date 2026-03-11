@@ -1,20 +1,52 @@
-:root {
-  /* Core Colors - Only 12 Variables */
-  --primary: #6366f1;
-  --purple: #8b5cf6;
-  --bg-dark: #1a1d29;
-  --bg-light: #252833;
-  --text-white: #e8eaf0;
-  --text-gray: #b0b0b0;
-  --error: #ef4444;
-  --success: #10b981;
-  --warning: #fb923c;
-  --white: #ffffff;
-  --black: #000000;
-  --border: rgba(99, 102, 241, 0.2);
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 
-  --transition: all 0.3s ease;
-  --radius: 12px;
+:root {
+  --primary:         rgb(0, 85, 254);
+  --primary-20:      rgba(0, 85, 254, 0.2);
+  --primary-15:      rgba(0, 85, 254, 0.15);
+  --primary-08:      rgba(0, 85, 254, 0.08);
+  --primary-04:      rgba(0, 85, 254, 0.04);
+
+  --bg-darkest:      rgb(8, 8, 8);
+  --bg-dark:         rgb(13, 13, 13);
+  --bg-surface:      rgb(19, 19, 19);
+  --bg-base:         rgb(0, 0, 14, 43);
+
+  --text-white:      rgb(239, 238, 236);
+  --text-60:         rgba(255, 255, 255, 0.6);
+  --text-50:         rgba(255, 255, 255, 0.5);
+  --text-30:         rgba(255, 255, 255, 0.3);
+  --text-gray:       rgb(153, 153, 153);
+  --text-gray-20:    rgba(153, 153, 153, 0.2);
+  --text-gray-10:    rgba(153, 153, 153, 0.1);
+
+  --white-20:        rgba(255, 255, 255, 0.2);
+  --white-15:        rgba(255, 255, 255, 0.15);
+  --white-10:        rgba(255, 255, 255, 0.1);
+  --white-08:        rgba(255, 255, 255, 0.08);
+  --white-07:        rgba(255, 255, 255, 0.07);
+  --white-05:        rgba(255, 255, 255, 0.05);
+  --white-02:        rgba(255, 255, 255, 0.02);
+
+  --black-95:        rgba(0, 0, 0, 0.95);
+  --black-50:        rgba(0, 0, 0, 0.5);
+  --black-30:        rgba(0, 0, 0, 0.3);
+
+  --border:          rgba(0, 85, 254, 0.2);
+  --border-subtle:   rgba(153, 153, 153, 0.1);
+
+  --error:           #ef4444;
+  --success:         #10b981;
+  --warning:         #fb923c;
+  --white:           rgb(255, 255, 255);
+  --black:           rgb(0, 0, 0);
+
+  --transition:      all 0.3s ease;
+  --radius:          12px;
+
+  --font-sans:       "Inter", sans-serif;
+  --font-heading:    "Outfit", sans-serif;
+  --font-mono:       "JetBrains Mono", monospace;
 }
 
 * {
@@ -24,8 +56,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-dark);
@@ -36,4 +67,12 @@ body {
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
