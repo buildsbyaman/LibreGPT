@@ -6,7 +6,7 @@
   min-width: 320px;
   max-width: 500px;
   border-radius: 12px;
-  box-shadow: 0 10px 40px var(--black-30);
+  box-shadow: var(--shadow-lg);
   animation: slideIn 0.3s ease-out;
   backdrop-filter: blur(10px);
 }
@@ -52,7 +52,7 @@
   justify-content: center;
   padding: 0.25rem;
   border-radius: 6px;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 .flash-close svg {
@@ -61,67 +61,51 @@
 }
 
 .flash-close:hover {
-  background-color: var(--black-30);
+  background-color: var(--overlay-10);
 }
 
 .flash-success {
-  background: linear-gradient(
-    135deg,
-    rgba(16, 185, 129, 0.95) 0%,
-    rgba(5, 150, 105, 0.9) 100%
-  );
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: var(--white);
-  box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+  background: var(--success);
+  border: 1px solid var(--border-default);
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(5, 150, 105, 0.3);
 }
 
 .flash-success .flash-close:hover {
-  background-color: var(--white-20);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .flash-error {
-  background: linear-gradient(
-    135deg,
-    rgba(239, 68, 68, 0.95) 0%,
-    rgba(220, 38, 38, 0.9) 100%
-  );
-  border: 1px solid rgba(239, 68, 68, 0.5);
-  color: var(--white);
-  box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
+  background: var(--error);
+  border: 1px solid var(--border-default);
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(220, 38, 38, 0.3);
 }
 
 .flash-error .flash-close:hover {
-  background-color: var(--white-20);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .flash-info {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 85, 254, 0.95) 0%,
-    rgba(0, 60, 200, 0.9) 100%
-  );
+  background: var(--primary);
   border: 1px solid var(--primary-20);
-  color: var(--white);
-  box-shadow: 0 10px 40px var(--primary-20);
+  color: #fff;
+  box-shadow: var(--shadow-primary);
 }
 
 .flash-info .flash-close:hover {
-  background-color: var(--white-20);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .flash-warning {
-  background: linear-gradient(
-    135deg,
-    rgba(251, 146, 60, 0.95) 0%,
-    rgba(249, 115, 22, 0.9) 100%
-  );
-  border: 1px solid rgba(251, 146, 60, 0.5);
-  color: var(--white);
-  box-shadow: 0 10px 40px rgba(251, 146, 60, 0.3);
+  background: var(--warning);
+  border: 1px solid var(--border-default);
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(217, 119, 6, 0.3);
 }
 
 .flash-warning .flash-close:hover {
-  background-color: var(--white-20);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 640px) {

@@ -4,10 +4,11 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background: var(--bg-dark);
+  background: var(--bg-body);
   padding: 1rem;
   position: relative;
   overflow: hidden;
+  transition: background 0.35s ease;
 }
 
 .signup-container::before {
@@ -56,12 +57,13 @@
   padding: 3rem 2.5rem;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 20px 60px var(--black-50), 0 0 0 1px var(--border);
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--border-default);
   position: relative;
   z-index: 1;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-default);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .signup-header {
@@ -94,7 +96,7 @@
 }
 
 .signup-header h1 {
-  color: var(--text-white);
+  color: var(--text-primary);
   font-size: 2.25rem;
   font-weight: 700;
   margin: 0 0 0.5rem 0;
@@ -103,7 +105,7 @@
 }
 
 .signup-header p {
-  color: var(--text-gray);
+  color: var(--text-secondary);
   font-size: 1rem;
   margin: 0;
 }
@@ -121,7 +123,7 @@
 }
 
 .input-group label {
-  color: var(--text-white);
+  color: var(--text-primary);
   font-size: 0.95rem;
   font-weight: 600;
 }
@@ -131,19 +133,17 @@
 }
 
 .input-wrapper input {
-  background: var(--bg-dark);
-  border: 2px solid var(--border);
+  background: var(--bg-input);
+  border: 2px solid var(--border-default);
   border-radius: var(--radius);
   padding: 0.9rem 1rem;
   padding-left: 3rem;
   padding-right: 3rem;
   font-size: 1rem;
-  color: var(--text-white);
+  color: var(--text-primary);
   width: 100%;
   transition: var(--transition);
   outline: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   font-family: var(--font-sans);
 }
 
@@ -154,7 +154,7 @@
 }
 
 .input-wrapper input::placeholder {
-  color: var(--text-gray);
+  color: var(--text-placeholder);
 }
 
 .input-icon {
@@ -213,12 +213,12 @@
 
 .input-error {
   border-color: var(--error) !important;
-  background-color: rgba(239, 68, 68, 0.05) !important;
+  background-color: transparent !important;
 }
 
 .input-error:focus {
   border-color: var(--error) !important;
-  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
 }
 
 .input-success {
@@ -227,7 +227,7 @@
 
 .input-success:focus {
   border-color: var(--success) !important;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1) !important;
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1) !important;
 }
 
 .validation-error {
@@ -236,7 +236,7 @@
   gap: 0.4rem;
   margin-top: 0.4rem;
   padding: 0.5rem 0.75rem;
-  background-color: rgba(239, 68, 68, 0.08);
+  background-color: transparent;
   border-left: 3px solid var(--error);
   border-radius: 8px;
   color: var(--error);
@@ -256,7 +256,7 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
   padding: 0.75rem 1rem;
-  background-color: rgba(239, 68, 68, 0.08);
+  background-color: transparent;
   border: 1px solid var(--error);
   border-radius: 8px;
   color: var(--error);
@@ -291,7 +291,7 @@
 .strength-bar {
   flex: 1;
   height: 4px;
-  background-color: var(--text-gray-20);
+  background-color: var(--overlay-10);
   border-radius: 999px;
   overflow: hidden;
   position: relative;
@@ -321,7 +321,7 @@
 .strength-text {
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text-gray);
+  color: var(--text-muted);
   min-width: 60px;
 }
 
@@ -348,7 +348,7 @@
   cursor: pointer;
   margin-top: 0.5rem;
   transition: var(--transition);
-  box-shadow: 0 4px 16px var(--primary-20);
+  box-shadow: var(--shadow-primary);
   position: relative;
   overflow: hidden;
   font-family: var(--font-sans);
@@ -361,15 +361,14 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, var(--white-20), transparent);
+  background: linear-gradient(90deg, transparent, var(--overlay-10), transparent);
   transition: left 0.5s;
 }
 
 .signup-button:hover {
-  background: var(--primary);
+  background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px var(--primary-20);
-  filter: brightness(1.15);
+  box-shadow: var(--shadow-md);
 }
 
 .signup-button:hover::before {
@@ -407,6 +406,7 @@
 .spinner-circle {
   stroke-dasharray: 50;
   stroke-dashoffset: 25;
+  stroke: var(--white);
   animation: dash 1.5s ease-in-out infinite;
 }
 
@@ -420,11 +420,11 @@
   text-align: center;
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-default);
 }
 
 .signup-footer p {
-  color: var(--text-gray);
+  color: var(--text-secondary);
   font-size: 0.95rem;
   margin: 0;
 }

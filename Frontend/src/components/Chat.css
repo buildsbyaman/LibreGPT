@@ -4,7 +4,7 @@
   text-align: center;
   padding: 1rem;
   font-family: var(--font-heading);
-  color: var(--text-60);
+  color: var(--text-secondary);
 }
 
 .chats {
@@ -28,13 +28,14 @@
   max-width: 85%;
   padding: 0.75rem 1.5rem;
   background: var(--primary);
+  color: var(--white);
   border-radius: 20px 20px 4px 20px;
   width: fit-content;
   word-wrap: break-word;
   overflow-wrap: break-word;
   font-size: 0.95rem;
   line-height: 1.6;
-  box-shadow: 0 4px 12px var(--primary-20);
+  box-shadow: var(--shadow-primary);
   animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
@@ -45,7 +46,7 @@
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, var(--white-10), transparent);
+  background: linear-gradient(135deg, var(--overlay-10), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -78,11 +79,13 @@
   word-break: break-word;
   font-size: 0.95rem;
   line-height: 1.7;
-  background: var(--white-02);
+  color: var(--text-primary);
+  background: var(--bg-surface);
   border-radius: 16px;
-  border: 1px solid var(--white-05);
+  border: 1px solid var(--border-default);
   animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px var(--black-30);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.35s ease, border-color 0.35s ease;
 }
 
 .gpt-message h1,
@@ -92,6 +95,7 @@
   margin-bottom: 0.75rem;
   line-height: 1.3;
   font-family: var(--font-heading);
+  color: var(--text-primary);
 }
 
 .gpt-message h1 {
@@ -139,8 +143,8 @@
   font-size: 0.9rem;
   overflow-x: auto;
   font-family: var(--font-mono);
-  background: var(--bg-surface) !important;
-  border: 1px solid var(--border);
+  background: var(--code-bg) !important;
+  border: 1px solid var(--border-default);
 }
 
 .loader {

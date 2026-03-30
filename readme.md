@@ -16,16 +16,17 @@ A modern full-stack AI chat app using React and Node.js that delivers a ChatGPT-
 - **Real-time AI Chat** - Interactive conversations with AI using OpenRouter
 - **Thread Management** - Organize conversations into separate threads with unique IDs
 - **Persistent Storage** - All chats stored in MongoDB with full history
-- **Modern UI** - Clean, responsive interface inspired by ChatGPT
+- **Modern UI & Dual Themes** - Clean, premium interface inspired perfectly by ChatGPT, featuring full **Light / Dark Mode** support powered by dynamic semantic CSS variables.
 - **Fast & Efficient** - Built with Vite for optimal performance
 - **Rate Limiting** - Protected API endpoints with express-rate-limit
-- **Responsive Design** - Works seamlessly on desktop and mobile devices
+- **Advanced Mobile Responsiveness** - Perfect edge-to-edge layout constraints ensuring the search bar remains permanently locked in viewport on iOS & Android browsers.
 - **Markdown Support** - Rich text formatting with syntax highlighting
 - **Context Preservation** - Maintains conversation context within threads
 
 ## 📸 Screenshot
 
-![LibreGPT Interface](ProjectSnapshot.png)
+![LibreGPT Dark Mode Interface](SnapshotDark.png)
+![LibreGPT Light Mode Interface](SnapshotLight.png)
 
 ## 🛠️ Tech Stack
 

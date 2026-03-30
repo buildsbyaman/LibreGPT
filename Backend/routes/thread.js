@@ -139,7 +139,7 @@ router.post("/chat", threadSchemaValidator, async (req, res) => {
             role: "user",
             content: `strictly rephrase this "${message}" in 3 words and output only 3 words and nothing else.`,
           },
-        ]),
+        ], req.body.model),
         AImodel(messagesWithHistory, req.body.model),
       ]);
 

@@ -20,6 +20,21 @@ function App() {
   const [username, setUsername] = useState("");
   const [flashMessage, setFlashMessage] = useState({ message: "", type: "" });
 
+  // Theme state – persisted in localStorage
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("libregpt-theme");
+    return saved || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("libregpt-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   useEffect(() => {
     const fetchLoginStatus = async () => {
       try {
@@ -74,6 +89,8 @@ function App() {
     setUsername,
     flashMessage,
     setFlashMessage,
+    theme,
+    toggleTheme,
   };
 
   return (

@@ -55,7 +55,7 @@ const fetchFreeModels = async () => {
 };
 
 const AImodel = async (messages, model) => {
-  let selectedModelName = model || ":free";
+  let selectedModelName = model || "google/gemini-2.0-flash-exp:free";
 
   try {
     const apiResponse = await client.chat.completions.create({

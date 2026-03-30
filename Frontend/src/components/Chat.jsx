@@ -7,12 +7,14 @@ import "highlight.js/styles/github-dark.css";
 import { SyncLoader } from "react-spinners";
 
 const Chat = () => {
-  const { newChat, prevChats, loading, isGettingReply } = useContext(myContext);
+  const { newChat, prevChats, loading, isGettingReply, theme } = useContext(myContext);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [prevChats, isGettingReply]);
+
+  const loaderColor = theme === "light" ? "#4f46e5" : "#e0e0e8";
 
   return (
     <div className="chats">
@@ -39,7 +41,7 @@ const Chat = () => {
         <div className="gpt-chat-div">
           <SyncLoader
             className="loader"
-            color={"#efeaea"}
+            color={loaderColor}
             loading={loading}
             id="sync-loader"
           />
