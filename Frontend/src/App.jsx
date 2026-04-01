@@ -23,7 +23,7 @@ function App() {
   // Theme state – persisted in localStorage
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem("libregpt-theme");
-    return saved || "dark";
+    return saved || "light";
   });
 
   useEffect(() => {

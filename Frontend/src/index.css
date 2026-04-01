@@ -1,6 +1,63 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 
+:root {
+  --transition:      all 0.3s ease;
+  --radius:          12px;
+  --font-sans:       "Inter", sans-serif;
+  --font-heading:    "Outfit", sans-serif;
+  --font-mono:       "JetBrains Mono", monospace;
+}
+
 :root,
+[data-theme="light"] {
+  --primary:         #4f46e5;
+  --primary-hover:   #6366f1;
+  --primary-20:      rgba(79, 70, 229, 0.18);
+  --primary-15:      rgba(79, 70, 229, 0.12);
+  --primary-08:      rgba(79, 70, 229, 0.06);
+  --primary-04:      rgba(79, 70, 229, 0.03);
+
+  --bg-body:         #f8f9fc;
+  --bg-dark:         #ffffff;
+  --bg-surface:      #f1f3f8;
+  --bg-elevated:     #ffffff;
+  --bg-input:        #ffffff;
+
+  --text-primary:    #0d0d0d;
+  --text-secondary:  #383838;
+  --text-muted:      #666666;
+  --text-placeholder: #8e8e8e;
+
+  --border-default:  rgba(79, 70, 229, 0.18);
+  --border-subtle:   rgba(0, 0, 0, 0.07);
+
+  --overlay-10:      rgba(0, 0, 0, 0.06);
+  --overlay-08:      rgba(0, 0, 0, 0.04);
+  --overlay-05:      rgba(0, 0, 0, 0.03);
+  --overlay-02:      rgba(0, 0, 0, 0.015);
+
+  --shadow-sm:       0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md:       0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg:       0 16px 48px rgba(0, 0, 0, 0.10);
+  --shadow-primary:  0 4px 16px rgba(79, 70, 229, 0.15);
+
+  --error:           #dc2626;
+  --success:         #059669;
+  --warning:         #d97706;
+  --info:            #2563eb;
+  --white:           #ffffff;
+  --black:           #000000;
+
+  --code-bg:         #f1f3f8;
+
+  --scrollbar-thumb: rgba(79, 70, 229, 0.20);
+  --scrollbar-track: transparent;
+
+  --loader-color:    #4f46e5;
+
+  color-scheme: light;
+}
+
 [data-theme="dark"] {
   /* Exact ChatGPT OpenAI Green */
   --primary:         #10a37f;
@@ -49,63 +106,7 @@
 
   --loader-color:    #ececec;
 
-  --transition:      all 0.3s ease;
-  --radius:          12px;
-
-  --font-sans:       "Inter", sans-serif;
-  --font-heading:    "Outfit", sans-serif;
-  --font-mono:       "JetBrains Mono", monospace;
-
   color-scheme: dark;
-}
-
-[data-theme="light"] {
-  --primary:         #4f46e5;
-  --primary-hover:   #6366f1;
-  --primary-20:      rgba(79, 70, 229, 0.18);
-  --primary-15:      rgba(79, 70, 229, 0.12);
-  --primary-08:      rgba(79, 70, 229, 0.06);
-  --primary-04:      rgba(79, 70, 229, 0.03);
-
-  --bg-body:         #f8f9fc;
-  --bg-dark:         #ffffff;
-  --bg-surface:      #f1f3f8;
-  --bg-elevated:     #ffffff;
-  --bg-input:        #ffffff;
-
-  --text-primary:    #0d0d0d;
-  --text-secondary:  #383838;
-  --text-muted:      #666666;
-  --text-placeholder: #8e8e8e;
-
-  --border-default:  rgba(79, 70, 229, 0.18);
-  --border-subtle:   rgba(0, 0, 0, 0.07);
-
-  --overlay-10:      rgba(0, 0, 0, 0.06);
-  --overlay-08:      rgba(0, 0, 0, 0.04);
-  --overlay-05:      rgba(0, 0, 0, 0.03);
-  --overlay-02:      rgba(0, 0, 0, 0.015);
-
-  --shadow-sm:       0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md:       0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-lg:       0 16px 48px rgba(0, 0, 0, 0.10);
-  --shadow-primary:  0 4px 16px rgba(79, 70, 229, 0.15);
-
-  --error:           #dc2626;
-  --success:         #059669;
-  --warning:         #d97706;
-  --info:            #2563eb;
-  --white:           #ffffff;
-  --black:           #000000;
-
-  --code-bg:         #f1f3f8;
-
-  --scrollbar-thumb: rgba(79, 70, 229, 0.20);
-  --scrollbar-track: transparent;
-
-  --loader-color:    #4f46e5;
-
-  color-scheme: light;
 }
 
 /* ────────── Global reset ────────── */
