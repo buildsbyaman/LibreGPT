@@ -54,10 +54,17 @@ const fetchFreeModels = async () => {
                !id.includes("gemma") &&
                !id.includes("llama");
       })
-      .map((model) => ({
-        id: model.id,
-        name: (model.name || model.id.split("/").pop().replace(":free", "")).replace(/\s*\(free\)/gi, "").trim(),
-      }))
+      .map((model) => {
+        let name = model.name || model.id.split("/").pop().replace(":free", "");
+        name = name.replace(/\s*\(free\)/gi, "").trim();
+        if (name.includes(":")) {
+          name = name.split(":").slice(1).join(":").trim();
+        }
+        return {
+          id: model.id,
+          name: name,
+        };
+      })
       .sort((a, b) => a.name.localeCompare(b.name));
 
     cachedFreeModels = freeModels;
@@ -65,12 +72,8 @@ const fetchFreeModels = async () => {
 
     return freeModels;
   } catch (error) {
-    console.error("Error fetching free models from OpenRouter:", error);
-    return [
-      { id: "deepseek/deepseek-chat-v3-0324:free", name: "Deepseek" },
-      { id: "openai/gpt-oss-120b:free", name: "ChatGPT" },
-      { id: "amazon/nova-2-lite-v1:free", name: "Nova 2 Lite" },
-    ];
+    console.error("Error fetching free models from OpenRouter:", error.message || error);
+    return [];
   }
 };
 
@@ -80,15 +83,11 @@ const getFallbackModels = () => {
   if (cachedFreeModels && cachedFreeModels.length > 0) {
     return cachedFreeModels.map((m) => m.id);
   }
-  return [
-    "deepseek/deepseek-chat-v3-0324:free",
-    "openai/gpt-oss-120b:free",
-    "amazon/nova-2-lite-v1:free",
-  ];
+  return [];
 };
 
 const AImodel = async (messages, model, options = {}) => {
-  let selectedModelName = model || "deepseek/deepseek-chat-v3-0324:free";
+  let selectedModelName = model;
   const maxRetries = options.maxRetries ?? 2;
   let delayMs = options.initialDelayMs ?? 500;
   
@@ -105,9 +104,10 @@ const AImodel = async (messages, model, options = {}) => {
       });
       return apiResponse.choices[0].message.content;
     } catch (error) {
-      console.error(`Error on attempt ${attempt + 1} using ${options.useAlternateKey ? 'alternate' : 'primary'} key for model ${selectedModelName}:`, error);
+      const status = error.status || error.statusCode || (error.error && error.error.code) || error.code || "unknown";
+      const errMsg = error.message || (error.error && error.error.message) || error;
+      console.error(`Error on attempt ${attempt + 1} using ${options.useAlternateKey ? 'alternate' : 'primary'} key for model ${selectedModelName}: [Status ${status}] ${errMsg}`);
 
-      const status = error.status || error.statusCode || (error.error && error.error.code) || error.code;
       const isRateLimit = status === 429 || status === "429" || 
                           (error.message && error.message.includes("429")) || 
                           (error.error && error.error.message && error.error.message.includes("rate limit"));

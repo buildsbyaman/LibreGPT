@@ -16,13 +16,35 @@ router.get("/models", async (req, res) => {
   }
 });
 
-const threadSchemaValidator = (req, res, next) => {
+const threadSchemaValidator = async (req, res, next) => {
+  const { model } = req.body;
+  if (!model || typeof model !== "string" || model.trim() === "") {
+    return res.status(400).json({ error: "Please select a valid model" });
+  }
+
   const { error } = threadSchema.validate(req.body);
   if (error) {
+    const modelError = error.details.find((detail) => detail.path.includes("model"));
+    if (modelError) {
+      return res.status(400).json({ error: "Please select a valid model" });
+    }
     return res
       .status(400)
       .json({ message: "Invalid input data", details: error.details });
   }
+
+  // Validate that the model is one of the valid free models
+  try {
+    const freeModels = await fetchFreeModels();
+    const isValidModel = freeModels.some((m) => m.id === model);
+    if (!isValidModel) {
+      return res.status(400).json({ error: "Please select a valid model" });
+    }
+  } catch (err) {
+    console.error("Error validating model in schema validator:", err);
+    return res.status(400).json({ error: "Please select a valid model" });
+  }
+
   next();
 };
 
@@ -154,7 +176,7 @@ router.post("/chat", threadSchemaValidator, async (req, res) => {
           suitableTitle = message.split(" ").slice(0, 3).join(" ") || "New Chat";
         }
       } catch (titleError) {
-        console.error("Error generating title:", titleError);
+        console.error("Error generating title:", titleError.message || titleError);
         suitableTitle = message.split(" ").slice(0, 3).join(" ") || "New Chat";
       }
 

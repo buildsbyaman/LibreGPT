@@ -9,9 +9,16 @@ const Chatwindow = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [availableModels, setAvailableModels] = useState([]);
   const [modelsLoading, setModelsLoading] = useState(true);
+  const [modelSearchQuery, setModelSearchQuery] = useState("");
   const modelDropdownRef = useRef(null);
   const userMenuRef = useRef(null);
   const navigate = useNavigate();
+
+  const filteredModels = availableModels.filter(
+    (model) =>
+      model.name.toLowerCase().includes(modelSearchQuery.toLowerCase()) ||
+      model.id.toLowerCase().includes(modelSearchQuery.toLowerCase())
+  );
 
   const {
     prompt,
@@ -43,21 +50,15 @@ const Chatwindow = () => {
         const data = await response.json();
 
         if (data.success && data.models.length > 0) {
-          const topModels = data.models.slice(0, 5);
-          setAvailableModels(topModels);
+          setAvailableModels(data.models);
 
-          if (!currentModel || currentModel === "Deepseek") {
-            setCurrentModel(topModels[0].id);
+          if (!currentModel) {
+            setCurrentModel(data.models[0].id);
           }
         }
       } catch (error) {
         console.error("Failed to fetch models:", error);
-
-        setAvailableModels([
-          { id: "deepseek/deepseek-chat-v3-0324:free", name: "Deepseek" },
-          { id: "openai/gpt-oss-120b:free", name: "ChatGPT" },
-          { id: "amazon/nova-2-lite-v1:free", name: "Nova 2 Lite" },
-        ]);
+        setAvailableModels([]);
       } finally {
         setModelsLoading(false);
       }
@@ -124,6 +125,29 @@ const Chatwindow = () => {
 
   const handleAiSearch = async () => {
     if (!prompt.trim()) return;
+
+    const isValidModel =
+      !modelsLoading &&
+      currentModel &&
+      availableModels.some((m) => m.id === currentModel);
+
+    if (!isValidModel) {
+      const promptCopy = prompt;
+      setPrompt("");
+      setPrevChats((prevChats) => [
+        ...prevChats,
+        {
+          role: "user",
+          content: promptCopy,
+        },
+        {
+          role: "assistant",
+          content: "Please select a valid model",
+        },
+      ]);
+      return;
+    }
+
     setisGettingReply(true);
     setNewChat(false);
     const options = {
@@ -225,22 +249,41 @@ const Chatwindow = () => {
                 <div className="model-skeleton"></div>
               </div>
             ) : (
-              <ul>
-                {availableModels.map((model) => (
-                  <li
-                    key={model.id}
-                    className={currentModel === model.id ? "model-active" : ""}
-                    onClick={() => {
-                      setCurrentModel(model.id);
-                    }}
-                  >
-                    <span className="model-name">{model.name}</span>
-                    {currentModel === model.id && (
-                      <span className="model-check">✓</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              <>
+                <div
+                  className="model-search-container"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <input
+                    type="text"
+                    placeholder="Search free models..."
+                    value={modelSearchQuery}
+                    onChange={(e) => setModelSearchQuery(e.target.value)}
+                    className="model-search-input"
+                  />
+                </div>
+                <ul>
+                  {filteredModels.map((model) => (
+                    <li
+                      key={model.id}
+                      className={currentModel === model.id ? "model-active" : ""}
+                      onClick={() => {
+                        setCurrentModel(model.id);
+                        setSelectModelOpen(false);
+                        setModelSearchQuery(""); // Clear search query on selection
+                      }}
+                    >
+                      <span className="model-name">{model.name}</span>
+                      {currentModel === model.id && (
+                        <span className="model-check">✓</span>
+                      )}
+                    </li>
+                  ))}
+                  {filteredModels.length === 0 && (
+                    <li className="no-models-found">No models found</li>
+                  )}
+                </ul>
+              </>
             )}
           </div>
         </div>
