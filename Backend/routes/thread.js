@@ -133,15 +133,30 @@ router.post("/chat", threadSchemaValidator, async (req, res) => {
     } else {
       const messagesWithHistory = [{ role: "user", content: message }];
       let suitableTitle = null;
-      [suitableTitle, AIresponse] = await Promise.all([
-        AImodel([
+
+      // Run response generation first
+      AIresponse = await AImodel(messagesWithHistory, req.body.model);
+
+      // Run title generation sequentially to avoid concurrent rate limits
+      try {
+        suitableTitle = await AImodel([
           {
             role: "user",
             content: `strictly rephrase this "${message}" in 3 words and output only 3 words and nothing else.`,
           },
-        ], req.body.model),
-        AImodel(messagesWithHistory, req.body.model),
-      ]);
+        ], req.body.model);
+
+        // If title generation returned error messages or failed, use fallback
+        if (!suitableTitle || 
+            suitableTitle.includes("Rate Limit reached!") || 
+            suitableTitle.includes("API Keys Expired!") ||
+            suitableTitle.length > 100) {
+          suitableTitle = message.split(" ").slice(0, 3).join(" ") || "New Chat";
+        }
+      } catch (titleError) {
+        console.error("Error generating title:", titleError);
+        suitableTitle = message.split(" ").slice(0, 3).join(" ") || "New Chat";
+      }
 
       threadData = new thread({
         threadId,

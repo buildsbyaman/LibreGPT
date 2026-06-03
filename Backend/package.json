@@ -1,5 +1,9 @@
 {
   "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
   "dependencies": {
     "connect-mongo": "^6.0.0",
     "cors": "^2.8.5",
@@ -9,7 +13,7 @@
     "express-session": "^1.18.2",
     "joi": "^18.0.2",
     "mongoose": "^6.13.8",
-    "nodemon": "^3.1.11",
+    "nodemon": "^3.1.14",
     "openai": "^6.9.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",

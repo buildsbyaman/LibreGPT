@@ -54,14 +54,9 @@ const Chatwindow = () => {
         console.error("Failed to fetch models:", error);
 
         setAvailableModels([
-          { id: "openai/gpt-oss-120b:free", name: "ChatGPT" },
-          { id: "google/gemini-2.0-flash-exp:free", name: "Gemini" },
           { id: "deepseek/deepseek-chat-v3-0324:free", name: "Deepseek" },
+          { id: "openai/gpt-oss-120b:free", name: "ChatGPT" },
           { id: "amazon/nova-2-lite-v1:free", name: "Nova 2 Lite" },
-          {
-            id: "meta-llama/llama-3.3-70b-instruct:free",
-            name: "Llama 3.3 70B",
-          },
         ]);
       } finally {
         setModelsLoading(false);
@@ -237,10 +232,6 @@ const Chatwindow = () => {
                     className={currentModel === model.id ? "model-active" : ""}
                     onClick={() => {
                       setCurrentModel(model.id);
-                      setFlashMessage({
-                        message: `Switched to ${model.name}`,
-                        type: "info",
-                      });
                     }}
                   >
                     <span className="model-name">{model.name}</span>
